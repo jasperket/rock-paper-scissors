@@ -20,7 +20,7 @@ function playRound(playerSelection, computerSelection) {
         } 
         return 'You win! Rock beats Scissors';
     }
-    if(playerSelection == 'Paper') {
+    if(playerSelection == 'PAPER') {
         if(computerSelection == 'Rock') {
             return 'You win! Paper beats Rock';
         }
@@ -29,7 +29,7 @@ function playRound(playerSelection, computerSelection) {
         } 
         return 'You lose! Scissors beats Paper';
     }
-    if(playerSelection == 'Scissors') {
+    if(playerSelection == 'SCISSORS') {
         if(computerSelection == 'Rock') {
             return 'You lose! Rock beats Scissors';
         }
@@ -40,7 +40,27 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-const playerSelection = prompt("Select your weapon! (Rock, Paper, or Scissors)");
-const computerSelection = getComputerChoice();
+function getResults(roundPlayed) {
+    if(roundPlayed.search('win') != -1) {
+        return 1;
+    } else if(roundPlayed.search('lose') != -1) {
+        return -1;
+    }
+    return 0;
+}
 
-console.log(playRound(playerSelection,computerSelection));
+let playerWins = 0;
+let computerWins = 0;
+
+for(let i = 0; i < 5; i++) {
+    const computerSelection = getComputerChoice();
+    const playerSelection = prompt('Select your weapon! (Rock, paper, scissors)');
+    const resultAnnounce = playRound(playerSelection,computerSelection);
+    const results = getResults(resultAnnounce);
+    if(results === 1) {
+        playerWins++;
+    } else if (results === -1) {
+        computerWins++;
+    }
+    console.log(resultAnnounce);
+}
