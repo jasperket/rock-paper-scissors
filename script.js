@@ -10,8 +10,7 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toUpperCase();
-    if(playerSelection == 'ROCK') {
+    if(playerSelection == 'Rock') {
         if(computerSelection == 'Rock') {
             return 'Draw! Rock draws Rock';
         }
@@ -20,7 +19,7 @@ function playRound(playerSelection, computerSelection) {
         } 
         return 'You win! Rock beats Scissors';
     }
-    if(playerSelection == 'PAPER') {
+    if(playerSelection == 'Paper') {
         if(computerSelection == 'Rock') {
             return 'You win! Paper beats Rock';
         }
@@ -29,7 +28,7 @@ function playRound(playerSelection, computerSelection) {
         } 
         return 'You lose! Scissors beats Paper';
     }
-    if(playerSelection == 'SCISSORS') {
+    if(playerSelection == 'Scissors') {
         if(computerSelection == 'Rock') {
             return 'You lose! Rock beats Scissors';
         }
@@ -49,18 +48,40 @@ function getResults(roundPlayed) {
     return 0;
 }
 
+function oneRound(selection) {
+    const computerSelection = getComputerChoice();
+    let resultAnnounce, results;
+    resultAnnounce = playRound(selection,computerSelection);
+    results = getResults(resultAnnounce);
+    if(results === 1) {
+        playerWins++;
+        pScore.textContent++;
+        log.style.color = '#77dd77';
+    } else if (results === -1) {
+        computerWins++;
+        cScore.textContent++;
+        log.style.color = '#ff6961';
+    } else {
+        log.style.color = 'black';
+    }
+    log.textContent = resultAnnounce;
+}
+
+
 let playerWins = 0;
 let computerWins = 0;
 
-for(let i = 0; i < 5; i++) {
-    const computerSelection = getComputerChoice();
-    const playerSelection = prompt('Select your weapon! (Rock, paper, scissors)');
-    const resultAnnounce = playRound(playerSelection,computerSelection);
-    const results = getResults(resultAnnounce);
-    if(results === 1) {
-        playerWins++;
-    } else if (results === -1) {
-        computerWins++;
-    }
-    console.log(resultAnnounce);
-}
+const rock = document.querySelector('#rock');
+rock.addEventListener('click', e => oneRound('Rock'));
+
+const paper = document.querySelector('#paper');
+paper.addEventListener('click', e => oneRound('Paper'));
+
+const scissors = document.querySelector('#scissors');
+scissors.addEventListener('click', e => oneRound('Scissors'));
+
+const log = document.querySelector('#log');
+
+const pScore = document.querySelector('#pScore');
+
+const cScore = document.querySelector('#cScore');
